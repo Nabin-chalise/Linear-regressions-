@@ -1,34 +1,42 @@
-﻿# Linear-regressions-
-# Linear-regressions-
-# Understanding Bias-Variance, Regularization, and Ridge Regression
-
-## (a) Bias-Variance Explanation
-
-If your high-degree polynomial regression model performs very well on training data but poorly on test data, this is a classic sign of overfitting.
-
-- **Bias:** The model has low bias because it's flexible and fits the training data very closely.
-- **Variance:** The model has high variance, meaning it's too sensitive to noise or fluctuations in the training set and doesn't generalize well to unseen data.
-
-**Conclusion:**  
-👉 Your model is overfitting due to low bias and high variance.
+# 🎯 Understanding Bias-Variance, Regularization & Ridge Regression
 
 ---
 
-## (b) Regularization Techniques in Scikit-Learn
+## 🔍 (a) Bias-Variance Explanation
 
-To mitigate overfitting (high variance), we can use regularization to penalize model complexity.
+When a **high-degree polynomial regression model** performs **exceptionally well on training data** but **poorly on test data**, it’s a classic case of **overfitting**.
 
-| Technique  | Scikit-Learn Class | Penalty Term       | Effect                           |
-|------------|--------------------|--------------------|---------------------------------|
-| Ridge      | `Ridge()`          | L2: λ ∑ w²         | Shrinks coefficients, prefers smaller weights |
-| Lasso      | `Lasso()`          | L1: λ ∑ |w|        | Drives some coefficients to zero, feature selection |
-| ElasticNet | `ElasticNet()`      | L1 + L2            | Balance between Ridge and Lasso  |
+> **Bias:**  
+> The model has **low bias** because it fits the training data very closely (high flexibility).
 
-These reduce overfitting by limiting the model’s flexibility, helping it generalize better.
+> **Variance:**  
+> The model has **high variance**, meaning it is too sensitive to noise or small fluctuations in training data and fails to generalize.
+
+### ⚠️ Conclusion:  
+Your model is **overfitting** due to **low bias and high variance**.
 
 ---
 
-## (c) Implementation Using Ridge Regression
+## 🛠️ (b) Regularization Techniques in Scikit-Learn
+
+Regularization helps reduce overfitting by **penalizing model complexity** and limiting flexibility.
+
+| Technique   | Scikit-Learn Class  | Penalty Term     | Effect                                  |
+|-------------|---------------------|------------------|-----------------------------------------|
+| **Ridge**   | `Ridge()`           | L2: λ ∑ w²       | Shrinks coefficients towards zero       |
+| **Lasso**   | `Lasso()`           | L1: λ ∑ |w|      | Can zero out some coefficients (feature selection) |
+| **ElasticNet** | `ElasticNet()`    | L1 + L2          | Combines Ridge and Lasso penalties       |
+
+> These techniques improve **generalization** by controlling model complexity.
+
+---
+
+## 🚀 (c) Implementation Using Ridge Regression
+
+Below is a Python example demonstrating:
+
+- Overfitting of a high-degree polynomial model  
+- How Ridge regularization improves generalization  
 
 ```python
 from sklearn.preprocessing import PolynomialFeatures
@@ -44,7 +52,7 @@ np.random.seed(42)
 X = np.sort(np.random.rand(100, 1) * 2 - 1, axis=0)  # range [-1, 1]
 y = np.sin(2 * np.pi * X).ravel() + 0.3 * np.random.randn(100)
 
-# Split data
+# Split data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # High-degree Polynomial Regression (Overfitting)
@@ -77,4 +85,3 @@ plt.xlabel("X")
 plt.ylabel("y")
 plt.grid(True)
 plt.show()
-
